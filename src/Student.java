@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -12,7 +11,52 @@ public class Student {
             add("Maria");
         }
     };
-    int[][] grade = { { 10, 9, 8 }, { 7, 5, 8, 6 }, { 10, 7, 2, 6, 3 }, { 10, 10, 9, 10 }, { 5, 3, 3, 8 } };
+
+    ArrayList<ArrayList<Integer>> grade = new ArrayList<ArrayList<Integer>>() {
+        {
+            add(new ArrayList<Integer>() {
+                {
+                    add(10);
+                    add(9);
+                    add(8);
+                }
+            });
+            add(new ArrayList<Integer>() {
+                {
+                    add(7);
+                    add(5);
+                    add(8);
+                    add(6);
+                }
+            });
+            add(new ArrayList<Integer>() {
+                {
+                    add(10);
+                    add(7);
+                    add(2);
+                    add(6);
+                    add(3);
+                }
+            });
+            add(new ArrayList<Integer>() {
+                {
+                    add(10);
+                    add(10);
+                    add(9);
+                    add(10);
+                }
+            });
+            add(new ArrayList<Integer>() {
+                {
+                    add(5);
+                    add(3);
+                    add(3);
+                    add(8);
+                }
+            });
+        }
+    };
+
     Scanner action = new Scanner(System.in);
 
     public static void main(String[] args) throws Exception {
@@ -42,7 +86,7 @@ public class Student {
                     addGrade();
                     break;
                 case 3:
-                    // averageGrade();
+                    averageGrade();
                     break;
                 case 4:
                     System.out.println("Exiting...");
@@ -123,103 +167,66 @@ public class Student {
     }
 
     public void addGrade() {
-
-    }
-}
-=======
-import java.util.Scanner;
-
-public class Student {
-    String[] name = { "Laura", "Mark", "Jack", "Tom", "Maria" };
-    int[][] grade = { { 10, 9, 8 }, { 7, 5, 8, 6 }, { 10, 7, 2, 6, 3 }, { 10, 10, 9, 10 }, { 5, 3, 3, 8 } };
-
-    public static void main(String[] args) throws Exception {
-        System.out.println("Student grades management system");
-
-        Student ch = new Student();
-        ch.menu();
-    }
-
-    public void menu() {
-
-        System.out.println("Input a number for your action:");
-        System.out.println("1. See student list");
-        System.out.println("2. Add grade");
-        System.out.println("3. Calculate average grade");
+        System.out.println();
+        System.out.println("Add grade");
+        System.out.println("To which student would you like to add grade?");
         System.out.println("------");
-
-        Scanner action = new Scanner(System.in);
-        int choice = action.nextInt();
-
-        Student stud = new Student();
-
-        switch (choice) {
-            case 1:
-                stud.studentList();
-                break;
-            case 2:
-                // stud.addGrade();
-                break;
-            case 3:
-                // stud.averageGrade();
-                break;
-            default:
-                System.out.println("No such choice.");
-                break;
-        }
-        action.close();
-
-    }
-
-    public void studentList() {
-        System.out.println("See student list");
         System.out.println();
 
-        int count = name.length;
-
-        for (int i = 0; i < count; i++) {
-            System.out.println(i + 1 + ". " + name[i]);
+        for (String student : name) {
+            System.out.println(student);
         }
 
-        System.out.println();
-        System.out.println("1. Add student");
-        System.out.println("2. Delete student");
-        System.out.println("3. Back to menu");
+        String nmgr = action.nextLine();
+        int index = name.indexOf(nmgr);
 
-        Scanner action = new Scanner(System.in);
-        int choice = action.nextInt();
-
-        Student stud = new Student();
-
-        switch (choice) {
-            case 1:
-                stud.addStudent();
-                break;
-            case 2:
-
-                break;
-            case 3:
-
-                break;
-            default:
-                System.out.println("No such choice.");
-                break;
+        if (index != -1) {
+            System.out.println();
+            System.out.println("Current grades for " + nmgr + ": " + grade.get(index));
+            System.out.println("Enter new grade:");
+            int newGrade = action.nextInt();
+            action.nextLine();
+            grade.get(index).add(newGrade);
+            System.out.println("Grade added. Updated grades for " + nmgr + ": " + grade.get(index));
+            System.out.println();
+        } else {
+            System.out.println(nmgr + " not found in the list.");
         }
-        action.close();
     }
 
-    public void addStudent() {
-        System.out.println("Add student");
-        System.out.println("Input student name:");
+    public void averageGrade() {
+        System.out.println();
+        System.out.println("Average grade");
+        System.out.println("For which student would you like to calculate average grade?");
+        System.out.println("------");
+        System.out.println();
 
-        Scanner action = new Scanner(System.in);
-        String nm = action.nextLine();
-        action.close();
+        for (String student : name) {
+            System.out.println(student);
+        }
 
-        int add = name.length;
-        name[add + 1] = nm;
+        String nmavg = action.nextLine();
+        int index = name.indexOf(nmavg);
 
-        studentList();
+        ArrayList<Integer> grades = grade.get(index);
+
+        double avg = 0.0;
+
+        if (grades.isEmpty()) {
+            avg = 0.0;
+        }
+        int sum = 0;
+        for (int grade : grades) {
+            sum += grade;
+        }
+        avg = sum / grades.size();
+
+        if (index != -1) {
+            System.out.println();
+            System.out.println("Average grade for " + nmavg + " is: " + avg);
+            System.out.println();
+        } else {
+            System.out.println(nmavg + " not found in the list.");
+        }
     }
 }
->>>>>>> 3a429b8c84e341c17337ab0ab793a0f314416e9c
